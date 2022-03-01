@@ -6,7 +6,7 @@ public class Interval {
     private final int mEnd;
 
     public Interval(int start, int end) {
-        if (start >= end) {
+        if (start >= end && (start != 0 && end != 0)) {
             throw new IllegalArgumentException("invalid interval range");
         }
         mStart = start;
