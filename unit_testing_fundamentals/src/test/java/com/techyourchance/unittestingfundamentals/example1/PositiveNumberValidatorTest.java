@@ -4,7 +4,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.hamcrest.CoreMatchers.is;
 
 public class PositiveNumberValidatorTest {
 
@@ -16,20 +15,21 @@ public class PositiveNumberValidatorTest {
     }
 
     @Test
-    public void test1() {
+    public void test1(){
         boolean result = SUT.isPositive(-1);
-        Assert.assertThat(result, is(false));
+        Assert.assertFalse(result);
+        //Assert.assertThat(result,is(false)); DEPRECATED
     }
 
     @Test
-    public void test2() {
+    public void test2(){
         boolean result = SUT.isPositive(0);
-        Assert.assertThat(result, is(false));
+        Assert.assertFalse(result);
     }
 
     @Test
-    public void test3() {
-        boolean result = SUT.isPositive(1);
-        Assert.assertThat(result, is(true));
+    public void test3(){
+        boolean result = SUT.isPositive(2);
+        Assert.assertTrue(result);
     }
 }
