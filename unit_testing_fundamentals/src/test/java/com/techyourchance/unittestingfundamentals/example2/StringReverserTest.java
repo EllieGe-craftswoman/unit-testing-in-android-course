@@ -1,37 +1,36 @@
 package com.techyourchance.unittestingfundamentals.example2;
 
-import org.hamcrest.CoreMatchers;
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.assertThat;
 
 public class StringReverserTest {
 
     StringReverser SUT;
 
     @Before
-    public void setup() throws Exception {
+    public void setUp() {
         SUT = new StringReverser();
     }
 
     @Test
-    public void reverse_emptyString_emptyStringReturned() throws Exception {
+    public void reverse_emptyString_emptyStringReturned() {
         String result = SUT.reverse("");
-        assertThat(result, is(""));
+        assertEquals("", result);
     }
 
     @Test
-    public void reverse_singleCharacter_sameStringReturned() throws Exception {
+    public void reverse_singleCharacter_sameStringReturned() {
         String result = SUT.reverse("a");
-        assertThat(result, is("a"));
+        assertEquals("a", result);
     }
 
     @Test
-    public void reverse_longString_reversedStringReturned() throws Exception {
-        String result = SUT.reverse("Vasiliy Zukanov");
-        assertThat(result, is("vonakuZ yilisaV"));
+    public void reverse_longString_reversedStringReturned() {
+        String result = SUT.reverse("Ellie Soudi");
+        assertEquals("iduoS eillE", result);
     }
 }
