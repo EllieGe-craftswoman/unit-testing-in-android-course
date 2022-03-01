@@ -1,6 +1,6 @@
 package com.techyourchance.unittesting.screens.common.controllers;
 
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
 
 import com.techyourchance.unittesting.common.CustomApplication;
 import com.techyourchance.unittesting.common.dependencyinjection.ControllerCompositionRoot;

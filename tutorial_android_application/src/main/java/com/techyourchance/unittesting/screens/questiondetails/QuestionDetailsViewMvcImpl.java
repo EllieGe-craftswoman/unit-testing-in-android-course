@@ -1,6 +1,6 @@
 package com.techyourchance.unittesting.screens.questiondetails;
 
-import android.support.v7.widget.Toolbar;
+import androidx.appcompat.widget.Toolbar;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;

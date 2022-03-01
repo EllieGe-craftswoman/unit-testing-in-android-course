@@ -1,14 +1,13 @@
 package com.techyourchance.unittesting.common.dependencyinjection;
 
 import android.content.Context;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 import android.view.LayoutInflater;
 
 import com.techyourchance.unittesting.common.time.TimeProvider;
 import com.techyourchance.unittesting.networking.StackoverflowApi;
 import com.techyourchance.unittesting.networking.questions.FetchLastActiveQuestionsEndpoint;
-import com.techyourchance.unittesting.networking.questions.FetchQuestionDetailsEndpoint;
 import com.techyourchance.unittesting.questions.FetchLastActiveQuestionsUseCase;
 import com.techyourchance.unittesting.questions.FetchQuestionDetailsUseCase;
 import com.techyourchance.unittesting.screens.common.ViewMvcFactory;

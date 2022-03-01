@@ -1,9 +1,11 @@
 package com.techyourchance.unittesting.screens.common.navdrawer;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.NavigationView;
-import android.support.v4.widget.DrawerLayout;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import com.google.android.material.navigation.NavigationView;
+
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -42,12 +44,12 @@ public class NavDrawerViewMvcImpl extends BaseObservableViewMvc<NavDrawerViewMvc
 
     @Override
     public void openDrawer() {
-        mDrawerLayout.openDrawer(Gravity.START);
+        mDrawerLayout.openDrawer(GravityCompat.START);
     }
 
     @Override
     public boolean isDrawerOpen() {
-        return mDrawerLayout.isDrawerOpen(Gravity.START);
+        return mDrawerLayout.isDrawerOpen(GravityCompat.START);
     }
 
     @Override

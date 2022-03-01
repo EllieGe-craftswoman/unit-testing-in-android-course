@@ -1,17 +1,13 @@
 package com.techyourchance.unittesting.screens.questiondetails;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.techyourchance.unittesting.questions.FetchQuestionDetailsUseCase;
-import com.techyourchance.unittesting.questions.QuestionDetails;
 import com.techyourchance.unittesting.screens.common.controllers.BaseFragment;
-import com.techyourchance.unittesting.screens.common.screensnavigator.ScreensNavigator;
-import com.techyourchance.unittesting.screens.common.toastshelper.ToastsHelper;
 
 public class QuestionDetailsFragment extends BaseFragment {
 
@@ -39,6 +35,7 @@ public class QuestionDetailsFragment extends BaseFragment {
         QuestionDetailsViewMvc mViewMvc = getCompositionRoot().getViewMvcFactory().getQuestionDetailsViewMvc(container);
 
         mQuestionDetailsController.bindView(mViewMvc);
+        if(null != getArguments())
         mQuestionDetailsController.bindQuestionId(getArguments().getString(ARG_QUESTION_ID));
 
         return mViewMvc.getRootView();
@@ -57,7 +54,10 @@ public class QuestionDetailsFragment extends BaseFragment {
     }
 
     private String getQuestionId() {
-        return getArguments().getString(ARG_QUESTION_ID);
+        if(null != getArguments())
+            return getArguments().getString(ARG_QUESTION_ID);
+        else
+            return "";
     }
 
 }
