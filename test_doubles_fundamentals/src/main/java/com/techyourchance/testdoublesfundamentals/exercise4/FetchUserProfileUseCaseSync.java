@@ -26,26 +26,27 @@ public class FetchUserProfileUseCaseSync {
     public UseCaseResult fetchUserProfileSync(String userId) {
         EndpointResult endpointResult;
         try {
-            // the bug here is that userId is not passed to endpoint
-            endpointResult = mUserProfileHttpEndpointSync.getUserProfile("");
-            // the bug here is that I don't check for successful result and it's also a duplication
+            // the FIXED bug here is that userId is not passed to endpoint
+            endpointResult = mUserProfileHttpEndpointSync.getUserProfile(userId);
+            // the FIXED bug here is that I don't check for successful result and it's also a duplication
             // of the call later in this method
-            mUsersCache.cacheUser(
-                    new User(userId, endpointResult.getFullName(), endpointResult.getImageUrl()));
+            if (isSuccessfulEndpointResult(endpointResult)) {
+                mUsersCache.cacheUser(
+                        new User(userId, endpointResult.getFullName(), endpointResult.getImageUrl()));
+            }
         } catch (NetworkErrorException e) {
             return UseCaseResult.NETWORK_ERROR;
         }
 
-        if (isSuccessfulEndpointResult(endpointResult)) {
-            mUsersCache.cacheUser(
-                    new User(userId, endpointResult.getFullName(), endpointResult.getImageUrl()));
-        }
-
-        // the bug here is that I return wrong result in case of an unsuccessful server response
-        return UseCaseResult.SUCCESS;
+        // the FIXED bug here is that I return wrong result in case of an unsuccessful server response
+        return getUseCaseResult(endpointResult.getStatus());
     }
 
     private boolean isSuccessfulEndpointResult(EndpointResult endpointResult) {
         return endpointResult.getStatus() == UserProfileHttpEndpointSync.EndpointResultStatus.SUCCESS;
+    }
+    private UseCaseResult getUseCaseResult(UserProfileHttpEndpointSync.EndpointResultStatus endpointResultStatus) {
+        if (endpointResultStatus == UserProfileHttpEndpointSync.EndpointResultStatus.SUCCESS) return UseCaseResult.SUCCESS;
+        else return UseCaseResult.FAILURE;
     }
 }
