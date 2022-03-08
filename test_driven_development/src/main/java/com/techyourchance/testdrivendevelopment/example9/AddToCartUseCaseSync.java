@@ -7,16 +7,15 @@ import com.techyourchance.testdrivendevelopment.example9.networking.NetworkError
 
 public class AddToCartUseCaseSync {
 
+    private final AddToCartHttpEndpointSync mAddToCartHttpEndpointSync;
+
     public enum UseCaseResult {
         SUCCESS,
         FAILURE,
-        NETWORK_ERROR;
-    }
-
-    private final AddToCartHttpEndpointSync mAddToCartHttpEndpointSync;
-
-    public AddToCartUseCaseSync(AddToCartHttpEndpointSync addToCartHttpEndpointSync) {
-        mAddToCartHttpEndpointSync = addToCartHttpEndpointSync;
+        NETWORK_ERROR
+        }
+    public AddToCartUseCaseSync(AddToCartHttpEndpointSync mAddToCartHttpEndpointSync) {
+        this.mAddToCartHttpEndpointSync = mAddToCartHttpEndpointSync;
     }
 
     public UseCaseResult addToCartSync(String offerId, int amount) {
@@ -25,7 +24,7 @@ public class AddToCartUseCaseSync {
         try {
             result = mAddToCartHttpEndpointSync.addToCartSync(new CartItemScheme(offerId, amount));
         } catch (NetworkErrorException e) {
-            return UseCaseResult.NETWORK_ERROR;
+            return  UseCaseResult.NETWORK_ERROR;
         }
 
         switch (result) {
@@ -33,9 +32,8 @@ public class AddToCartUseCaseSync {
                 return UseCaseResult.SUCCESS;
             case AUTH_ERROR:
             case GENERAL_ERROR:
-                return UseCaseResult.FAILURE;
             default:
-                throw new RuntimeException("invalid endpoint result: " + result);
+                return UseCaseResult.FAILURE;
         }
     }
 }
