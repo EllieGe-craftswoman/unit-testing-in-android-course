@@ -8,45 +8,47 @@ import com.techyourchance.mockitofundamentals.example7.networking.NetworkErrorEx
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
-
+@RunWith(MockitoJUnitRunner.class)
 public class LoginUseCaseSyncTest {
 
     public static final String USERNAME = "Ellie_S";
     public static final String PASSWORD = "password";
     public static final String AUTH_TOKEN = "authToken";
 
-    LoginHttpEndpointSync mLoginHttpEndpointSyncMock;
-    AuthTokenCache mAuthTokenCacheMock;
-    EventBusPoster mEventBusPoster;
+    @Mock LoginHttpEndpointSync mLoginHttpEndpointSyncMock;
+    @Mock AuthTokenCache mAuthTokenCacheMock;
+    @Mock EventBusPoster mEventBusPoster;
 
     LoginUseCaseSync SUT;
 
     @Before
     public void setup() throws Exception {
-        mLoginHttpEndpointSyncMock = mock(LoginHttpEndpointSync.class);
-        mAuthTokenCacheMock = mock(AuthTokenCache.class);
-        mEventBusPoster = mock(EventBusPoster.class);
         SUT = new LoginUseCaseSync(mLoginHttpEndpointSyncMock, mAuthTokenCacheMock, mEventBusPoster);
         success();
     }
 
     @Test
     public void loginSync_success_usernameAndPasswordPassedToEndpoint() throws NetworkErrorException {
+        //Arrange
         ArgumentCaptor<String> ac = ArgumentCaptor.forClass(String.class);
+        //Act
         SUT.loginSync(USERNAME, PASSWORD);
+        //Assert
         verify(mLoginHttpEndpointSyncMock, times(1)).loginSync(ac.capture(), ac.capture());
         List<String> captures = ac.getAllValues();
         assertEquals(USERNAME, captures.get(0));
