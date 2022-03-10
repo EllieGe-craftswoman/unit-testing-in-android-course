@@ -34,18 +34,18 @@ public class FetchCartItemsManualTestDoublesUseCaseTest {
 
     // region helper fields ------------------------------------------------------------------------
     GetCartItemsHttpEndpointTd mGetCartItemsHttpEndpointTd;
-    @Mock FetchCartItemsUseCase.Listener mListenerMock1;
-    @Mock FetchCartItemsUseCase.Listener mListenerMock2;
+    @Mock FetchCartItemsUseCaseByE.Listener mListenerMock1;
+    @Mock FetchCartItemsUseCaseByE.Listener mListenerMock2;
 
     @Captor ArgumentCaptor<List<CartItem>> mAcListCartItem;
     // endregion helper fields ---------------------------------------------------------------------
 
-    FetchCartItemsUseCase SUT;
+    FetchCartItemsUseCaseByE SUT;
 
     @Before
-    public void setup() throws Exception {
+    public void setup() {
         mGetCartItemsHttpEndpointTd = new GetCartItemsHttpEndpointTd();
-        SUT = new FetchCartItemsUseCase(mGetCartItemsHttpEndpointTd);
+        SUT = new FetchCartItemsUseCaseByE(mGetCartItemsHttpEndpointTd);
         success();
     }
 
@@ -56,7 +56,7 @@ public class FetchCartItemsManualTestDoublesUseCaseTest {
     }
 
     @Test
-    public void fetchCartItems_correctLimitPassedToEndpoint() throws Exception {
+    public void fetchCartItems_correctLimitPassedToEndpoint() {
         // Arrange
         // Act
         SUT.fetchCartItemsAndNotify(LIMIT);
@@ -66,7 +66,7 @@ public class FetchCartItemsManualTestDoublesUseCaseTest {
     }
 
     @Test
-    public void fetchCartItems_success_observersNotifiedWithCorrectData() throws Exception {
+    public void fetchCartItems_success_observersNotifiedWithCorrectData() {
         // Arrange
         // Act
         SUT.registerListener(mListenerMock1);
@@ -83,7 +83,7 @@ public class FetchCartItemsManualTestDoublesUseCaseTest {
     }
 
     @Test
-    public void fetchCartItems_success_unsubscribedObserversNotNotified() throws Exception {
+    public void fetchCartItems_success_unsubscribedObserversNotNotified() {
         // Arrange
         // Act
         SUT.registerListener(mListenerMock1);
@@ -91,12 +91,12 @@ public class FetchCartItemsManualTestDoublesUseCaseTest {
         SUT.unregisterListener(mListenerMock2);
         SUT.fetchCartItemsAndNotify(LIMIT);
         // Assert
-        verify(mListenerMock1).onCartItemsFetched(any(List.class));
+        verify(mListenerMock1).onCartItemsFetched(mAcListCartItem.capture());
         verifyNoMoreInteractions(mListenerMock2);
     }
 
     @Test
-    public void fetchCartItems_generalError_observersNotifiedOfFailure() throws Exception {
+    public void fetchCartItems_generalError_observersNotifiedOfFailure() {
         // Arrange
         generalError();
         // Act
@@ -109,7 +109,7 @@ public class FetchCartItemsManualTestDoublesUseCaseTest {
     }
 
     @Test
-    public void fetchCartItems_networkError_observersNotifiedOfFailure() throws Exception {
+    public void fetchCartItems_networkError_observersNotifiedOfFailure() {
         // Arrange
         networkError();
         // Act
