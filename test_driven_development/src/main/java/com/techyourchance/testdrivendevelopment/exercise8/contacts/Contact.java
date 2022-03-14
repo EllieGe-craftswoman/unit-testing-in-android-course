@@ -1,5 +1,9 @@
 package com.techyourchance.testdrivendevelopment.exercise8.contacts;
 
+import android.os.Build;
+
+import java.util.Objects;
+
 public class Contact {
 
     private final String mId;
@@ -22,5 +26,21 @@ public class Contact {
 
     public String getImageUrl() {
         return mImageUrl;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Contact contact = (Contact) o;
+        return mId.equals(contact.mId) && mFullName.equals(contact.mFullName) && mImageUrl.equals(contact.mImageUrl);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = mId.hashCode();
+        result = 31 * result + mFullName.hashCode();
+        result = 31 * result + mImageUrl.hashCode();
+        return result;
     }
 }
