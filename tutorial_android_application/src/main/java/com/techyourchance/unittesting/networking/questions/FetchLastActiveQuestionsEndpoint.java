@@ -16,7 +16,7 @@ public class FetchLastActiveQuestionsEndpoint {
         void onQuestionsFetchFailed();
     }
 
-    private  final StackoverflowApi mStackoverflowApi;
+    private final StackoverflowApi mStackoverflowApi;
 
     public FetchLastActiveQuestionsEndpoint(StackoverflowApi stackoverflowApi) {
         mStackoverflowApi = stackoverflowApi;
